@@ -3,7 +3,6 @@ import { Input, Modal} from 'antd'
 import TableSelection from '../TableSelection'
 
 import './index.less'
- 
 
 class ReferControl extends React.Component{
     constructor(props){
@@ -59,6 +58,7 @@ class ReferControl extends React.Component{
                     visible={this.state.modalVisible}
                     onOk={this.handleModalOk}
                     onCancel={this.handleModalCancel}
+                    style={{width: 600}}
                 >
                     <TableSelection
                         dataSet={dataSource}
