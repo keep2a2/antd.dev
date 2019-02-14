@@ -3,8 +3,6 @@ import { DatePicker } from 'antd'
 import locale from 'antd/lib/date-picker/locale/zh_CN'
 import './index.less'
 
-const {RangePicker} = DatePicker
-
 class PeriodSelect extends React.Component{
     state = {
         startValue: null,

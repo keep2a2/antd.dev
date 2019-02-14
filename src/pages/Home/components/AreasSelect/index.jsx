@@ -5,14 +5,14 @@ const CheckboxGroup = Checkbox.Group
 
 const AreasSelect = props =>{
     
-    const options = props.areas.map(item => ({label: item.name, value: item.id}) )
+    const options = props.areas.map(item => ({ label: item.name, value: item.id }) );
 
     return(
         <div className="period-select">
             <CheckboxGroup
-                options={options}
-                value={props.checkedAreas}
-                onChange={props.onAreaChange}
+                options={ options }
+                value={ props.checkedAreas }
+                onChange={ props.onAreaChange }
             />
         </div>
     )
