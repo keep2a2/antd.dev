@@ -1,6 +1,7 @@
 import React from 'react'
 import { Layout } from 'antd'
 import ReferControl from '../../components/ReferControl'
+import DropdownControl from '../../components/DropdownControl'
 import './index.less'
 
 import {tableData2} from './mock/data01'
@@ -19,6 +20,10 @@ class Test extends React.Component{
                     content
                     <div style={{ width: 300 }}>
                         <ReferControl
+                            dataSource={tableData2}
+                        />
+
+                        <DropdownControl
                             dataSource={tableData2}
                         />
                     </div>

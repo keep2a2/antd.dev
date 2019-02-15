@@ -75,7 +75,9 @@ class TableSelection extends React.Component{
         return {
             onChange: (selectedRowKeys, selectedRows) => {
                 console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-                this.props.onChange(selectedRowKeys);
+
+                const validkeys = selectedRows.map(item => item.key);
+                this.props.onChange(validkeys);
             },
             getCheckboxProps: record => ({
                 disabled: record.name === 'Disabled User', // Column configuration not to be checked
@@ -86,7 +88,7 @@ class TableSelection extends React.Component{
     }
 
     render(){
-        const {dataSet} = this.props
+        const {dataSet, showSearch} = this.props
         const {showItems} = this.state
          
         const columns = this.getColumns(dataSet);
@@ -94,15 +96,21 @@ class TableSelection extends React.Component{
 
         return (
             <div className="table-selection">
-                <Search
+                {showSearch && (<Search
                     placeholder="input search text"
                     onSearch={this.handleSearch}
-                />
+                />)}
                 <Table 
                     rowSelection={rowSelection} 
                     columns={columns} 
                     dataSource={showItems}
                     size="small"
+                    pagination={{
+                        showQuickJumper: true,
+                        showSizeChanger: true,
+                        showTotal: total => `共 ${total} 条`,
+                    }}
+                    scroll={{ y: 220 }}
                 />
             </div>
         )

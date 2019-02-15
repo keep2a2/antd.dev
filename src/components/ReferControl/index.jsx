@@ -1,5 +1,6 @@
 import React from 'react'
 import { Input, Modal} from 'antd'
+import FilterPanel from '../FilterPanel'
 import TableSelection from '../TableSelection'
 
 import './index.less'
@@ -38,10 +39,7 @@ class ReferControl extends React.Component{
         const {dataSource} = this.props        
         const {value} = this.state
 
-        const suffix = (<i 
-            className="icon ap ap-navmenu-light" 
-            onClick={this.openModal}
-        />);
+        const suffix = <i className="icon ap ap-navmenu-light" onClick={this.openModal}/>;
 
         return (
             <div className="refer-control">
@@ -58,9 +56,16 @@ class ReferControl extends React.Component{
                     visible={this.state.modalVisible}
                     onOk={this.handleModalOk}
                     onCancel={this.handleModalCancel}
-                    style={{width: 600}}
+                    width={800}
                 >
+                    <FilterPanel 
+                        dataSet={dataSource}
+                        onOk={(filters) => {
+                            console.log(filters)
+                        }}
+                    />
                     <TableSelection
+                        showSearch={false}
                         dataSet={dataSource}
                         onChange={this.handleTableChange}
                         selectedKeys={value}
