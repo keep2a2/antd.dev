@@ -17,8 +17,8 @@ class TableSelection extends React.Component{
     }
 
     componentDidMount(){
-        this.keyField = 'name';
-        this.dataSource = this.getDataSource(this.props.dataSet);
+        const {dataSet, filters} = this.props
+        this.dataSource = this.getDataSource(dataSet, filters);
         
         this.setState({
             showItems: this.dataSource
@@ -26,7 +26,8 @@ class TableSelection extends React.Component{
     }
 
     componentWillReceiveProps(nextProps){
-        this.dataSource = this.getDataSource(nextProps.dataSet);
+        const {dataSet, filters} = nextProps
+        this.dataSource = this.getDataSource(dataSet, filters);
         
         this.setState({
             showItems: this.dataSource
@@ -38,7 +39,7 @@ class TableSelection extends React.Component{
         this.setState({showItems: items})
     }
 
-    getDataSource = (dataSet) => {
+    getDataSource = (dataSet, filters) => {
         let dataSource = [];
         const keyField = this.keyField ? this.keyField : 'key';
         
@@ -52,6 +53,20 @@ class TableSelection extends React.Component{
             })
             dataSource.push(item);
         });
+
+        const filterKeys = filters ? Object.keys(filters): [];
+        console.log('filterKeys', filters, filterKeys)
+        if(filterKeys.length){
+            dataSource = dataSource.filter(item => {
+                let matchNum = 0;
+                for(let k of filterKeys){
+                    if(filters[k].includes(item[k])){
+                        matchNum ++;
+                    }
+                }
+                return matchNum === filterKeys.length;
+            });
+        }
 
         return dataSource;
     }
@@ -106,11 +121,12 @@ class TableSelection extends React.Component{
                     dataSource={showItems}
                     size="small"
                     pagination={{
+                        pageSize: 6,
                         showQuickJumper: true,
                         showSizeChanger: true,
                         showTotal: total => `共 ${total} 条`,
                     }}
-                    scroll={{ y: 220 }}
+                    // scroll={{ y: 220 }}
                 />
             </div>
         )

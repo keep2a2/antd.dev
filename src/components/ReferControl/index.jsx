@@ -6,10 +6,13 @@ import TableSelection from '../TableSelection'
 import './index.less'
 
 class ReferControl extends React.Component{
+    selectedKeys = []
+
     constructor(props){
         super(props)
         this.state = {
             modalVisible: false,
+            filters: {},
             value: [3, 5],
         }
     }
@@ -24,10 +27,7 @@ class ReferControl extends React.Component{
 
     handleModalOk = () => {
         this.setState({modalVisible: false})
-    }
-
-    handleTableChange = (value) => {
-        this.setState({value})
+        this.setState({value: this.selectedKeys})
     }
 
     handleInputChange = (value) => {
@@ -37,7 +37,7 @@ class ReferControl extends React.Component{
 
     render(){
         const {dataSource} = this.props        
-        const {value} = this.state
+        const {value, filters} = this.state
 
         const suffix = <i className="icon ap ap-navmenu-light" onClick={this.openModal}/>;
 
@@ -56,19 +56,23 @@ class ReferControl extends React.Component{
                     visible={this.state.modalVisible}
                     onOk={this.handleModalOk}
                     onCancel={this.handleModalCancel}
-                    width={800}
+                    width={860}
                 >
                     <FilterPanel 
                         dataSet={dataSource}
                         onOk={(filters) => {
                             console.log(filters)
+                            this.setState({filters})
                         }}
                     />
                     <TableSelection
                         showSearch={false}
                         dataSet={dataSource}
-                        onChange={this.handleTableChange}
+                        onChange={value => {
+                            this.selectedKeys = value
+                        }}
                         selectedKeys={value}
+                        filters={filters}
                     />
                 </Modal>
             </div>

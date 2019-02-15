@@ -22,8 +22,7 @@ class FilterPanel extends React.Component{
         this.setState({filters: {}})
     }
 
-    handleChange = (value, option) => {
-        let fieldCode = option.props.fieldcode
+    handleChange = (value, fieldCode) => {
         let filters = {...this.state.filters}
         filters[fieldCode] = value;
         this.setState({filters})
@@ -40,7 +39,8 @@ class FilterPanel extends React.Component{
                 <div className="filter-component" key={index}>
                     <label>{field.label || field.code}</label>
                     <Select
-                        onChange={this.handleChange}
+                        mode="multiple"
+                        onChange={ value => { this.handleChange(value, field.code) }}
                         value={filters[field.code]}
                         style={{width: '100%'}}
                     >

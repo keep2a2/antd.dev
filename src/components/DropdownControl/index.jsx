@@ -33,6 +33,7 @@ class DropdownControl extends React.Component{
         const popoverContent = (
             
             <TableSelection
+                showSearch={true}
                 dataSet={dataSource}
                 onChange={this.handleTableChange}
                 selectedKeys={value}
