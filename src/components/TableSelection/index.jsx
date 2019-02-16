@@ -64,7 +64,8 @@ class TableSelection extends React.Component{
             dataSource.push(item);
         });
 
-        const filterKeys = filters ? Object.keys(filters): [];
+        let filterKeys = filters ? Object.keys(filters): [];
+        filterKeys = filterKeys.filter(k => filters[k] && filters[k].length );
         if(filterKeys.length){
             dataSource = dataSource.filter(item => {
                 let matchNum = 0;

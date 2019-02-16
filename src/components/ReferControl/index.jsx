@@ -61,7 +61,6 @@ class ReferControl extends React.Component{
                     <FilterPanel 
                         dataSet={dataSource}
                         onOk={(filters) => {
-                            console.log(filters)
                             this.setState({filters})
                         }}
                     />
