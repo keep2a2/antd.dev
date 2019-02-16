@@ -35,7 +35,17 @@ class TableSelection extends React.Component{
     }
 
     handleSearch = (keyword) => {
-        const items = this.dataSource.filter(item => item.key.indexOf(keyword) > -1)
+        const items = this.dataSource.filter(item => {
+            let match = false
+            const keys = Object.keys(item)
+            for(let k of keys){
+                if(String(item[k]).indexOf(keyword) > -1){
+                    match = true
+                    break
+                }
+            }
+            return match
+        })
         this.setState({showItems: items})
     }
 
@@ -55,7 +65,6 @@ class TableSelection extends React.Component{
         });
 
         const filterKeys = filters ? Object.keys(filters): [];
-        console.log('filterKeys', filters, filterKeys)
         if(filterKeys.length){
             dataSource = dataSource.filter(item => {
                 let matchNum = 0;
@@ -87,6 +96,8 @@ class TableSelection extends React.Component{
     }
 
     getRowSelection = () => {
+        const selectedKeys = undefined === selectedKeys ? this.state.selectedKeys : this.props.selectedKeys;
+
         return {
             onChange: (selectedRowKeys, selectedRows) => {
                 console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
@@ -95,7 +106,6 @@ class TableSelection extends React.Component{
                 this.props.onChange(validkeys);
             },
             getCheckboxProps: record => ({
-                disabled: record.name === 'Disabled User', // Column configuration not to be checked
                 name: record.name,
             }),
             selectedRowKeys: this.props.selectedKeys,
