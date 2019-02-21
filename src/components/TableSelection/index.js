@@ -1,51 +1,52 @@
-import React from 'react'
-import { Table } from 'antd'
-import _ from 'lodash'
-import './index.less'
+import React from "react";
+import { Table } from "antd";
+import _ from "lodash";
+import "./index.less";
 
 class TableSelection extends React.Component {
-    dataSource = null
-    keyField = null
+    dataSource = null;
+    keyField = null;
 
     constructor(props) {
-        super(props)
+        super(props);
         this.state = {
             showItems: []
-        }
+        };
     }
 
     componentDidMount() {
-        const { dataSet, filters } = this.props
+        const { dataSet, filters } = this.props;
         if (dataSet) this.keyField = dataSet.keyField;
         this.dataSource = this.getDataSource(dataSet, filters);
 
-        this.setState({ showItems: this.dataSource })
+        this.setState({ showItems: this.dataSource });
     }
 
     componentWillReceiveProps(nextProps) {
-        const { dataSet, filters } = nextProps
+        const { dataSet, filters } = nextProps;
         if (dataSet) this.keyField = dataSet.keyField;
         this.dataSource = this.getDataSource(dataSet, filters);
 
         this.setState({
             showItems: this.dataSource
-        })
+        });
     }
 
     getDataSource = (dataSet, filters) => {
         if (!dataSet) return [];
 
         let dataSource = [];
-        const keyField = this.keyField ? this.keyField : 'key';
+        const keyField = this.keyField ? this.keyField : "key";
 
-        dataSet.datas.forEach(data => {
+        dataSet.datas.forEach((data, i) => {
             let item = {};
             dataSet.fields.forEach((field, index) => {
                 item[field.code] = data[index];
-                if (keyField === field.code) {
-                    item.key = data[index];
-                }
-            })
+                // if (keyField === field.code) {
+                //     item.key = data[index];
+                // }
+                item.key = i;
+            });
             dataSource.push(item);
         });
 
@@ -65,49 +66,44 @@ class TableSelection extends React.Component {
         }
 
         return dataSource;
-    }
+    };
 
-    getColumns = (dataSet) => {
+    getColumns = dataSet => {
         if (!dataSet) return [];
-
         let columns = [];
 
         dataSet.displayFields.forEach(fieldcode => {
             const field = dataSet.fields.find(item => fieldcode === item.code);
-            if(field){
+            if (field) {
                 columns.push({
                     title: field.label || field.code,
-                    dataIndex: field.code,
+                    dataIndex: field.code
                     // sorter: (a, b) => a.age - b.age,
                     // sortDirections: ['descend', 'ascend'],
-                })
+                });
             }
-        })
+        });
 
         return columns;
-    }
+    };
 
     getRowSelection = () => {
-        const selectedKeys = undefined === selectedKeys ? this.state.selectedKeys : this.props.selectedKeys;
-
         return {
             onChange: (selectedRowKeys, selectedRows) => {
-                console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-
                 const validkeys = selectedRows.map(item => item.key);
-
+                console.log('selectedRowKeys', validkeys);
                 this.props.onChange(_.uniq(validkeys));
             },
             getCheckboxProps: record => ({
-                name: record.name,
+                name: record.name
             }),
-            selectedRowKeys: this.props.selectedKeys,
+            selectedRowKeys: this.props.selectedKeys
         };
-    }
+    };
 
     render() {
-        const { dataSet } = this.props
-        const { showItems } = this.state
+        const { dataSet } = this.props;
+        const { showItems } = this.state;
 
         const columns = this.getColumns(dataSet);
         const rowSelection = this.getRowSelection();
@@ -123,13 +119,13 @@ class TableSelection extends React.Component {
                         pageSize: 6,
                         showQuickJumper: true,
                         showSizeChanger: true,
-                        showTotal: total => `共 ${total} 条`,
+                        showTotal: total => `共 ${total} 条`
                     }}
-                // scroll={{ y: 220 }}
+                    // scroll={{ y: 220 }}
                 />
             </div>
-        )
+        );
     }
 }
 
-export default TableSelection
+export default TableSelection;

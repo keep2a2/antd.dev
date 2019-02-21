@@ -1,0 +1,75 @@
+.tiles-selection{
+    width: 100%;
+    .tiles-container{
+        float: left;
+        padding: 0;
+        width: 100%;
+        margin-left: -8px;
+    }
+    .tile-item{
+        vertical-align: middle;
+        display: inline-block;
+        font-size: 12px;
+        width: 75px;
+        line-height: 22px;
+        border-radius: 3px;
+        margin-left: 8px;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        color: #1e7be2;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        padding: 0 5px;
+        cursor: pointer;
+        text-align: center;
+        display: inline-block;
+
+        &.checked {
+            background: #2196f3;
+            border-color: #2196f3;
+            color: #fff;
+        }
+    }
+
+    .ant-carousel{
+        height: 24px;
+    }
+    .slick-slider{
+        position: relative;
+        .slick-next,
+        .slick-prev {
+            z-index: 1000;
+            left: auto;
+            right: 5px;
+
+            &:before {
+                color: #000;
+                font-family: slick;
+                font-size: 12px;
+                line-height: 1;
+                opacity: 0.75;
+            }
+            &.slick-disabled:before {
+                opacity: 0.25;
+            }
+        }
+        .slick-prev {
+            top: -1px;
+            right: 5px;
+            &:before {
+                content: "\25B2";
+            }
+        }
+        .slick-next {
+            top: 24px;
+            right: 4px;
+            &:before {
+                content: "\25BC";
+            }
+        }
+        .slick-slide{
+            border: none;
+        }
+    }
+}

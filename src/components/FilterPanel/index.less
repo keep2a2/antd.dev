@@ -2,21 +2,23 @@
     padding: 15px 25px;
 
     .filter-component{
-        display: inline-block;
+        display: inline-flex;
+        align-items: center;
         width: 30%;
-        padding-left: 80px;
         margin-bottom: 15px;
 
         label{
-            display: inline-block;
+            flex: 0 80px;
             text-align: right;
-            width: 80px;
-            margin-left: -80px;
             padding-right: 10px;
+            font-size: 12px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
         .ant-select{
-            width: 100%;
+            flex: 1;
         }
     }
 
@@ -24,6 +26,7 @@
         text-align: right;
         button{
             padding: 0 20px;
+            margin-right: 10px;
         }
     }
 }
