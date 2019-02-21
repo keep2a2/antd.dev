@@ -13,7 +13,23 @@ class ReferControl extends React.Component{
         this.state = {
             modalVisible: false,
             filters: {},
-            value: [3, 5],
+            value: [],
+        }
+    }
+
+    componentDidMount() {
+        const {value} = this.props
+        if(value){
+            this.setState({value})
+            this.selectedKeys = value
+        }
+    }
+
+    componentWillReceiveProps(nextProps, nextContext) {
+        const {value} = nextProps
+        if(value){
+            this.setState({value})
+            this.selectedKeys = value
         }
     }
 
@@ -28,6 +44,10 @@ class ReferControl extends React.Component{
     handleModalOk = () => {
         this.setState({modalVisible: false})
         this.setState({value: this.selectedKeys})
+
+        if('function' === typeof this.props.onChange){
+            this.props.onChange(this.selectedKeys)
+        }
     }
 
     handleInputChange = (value) => {
@@ -36,8 +56,8 @@ class ReferControl extends React.Component{
     }
 
     render(){
-        const {dataSource} = this.props        
-        const {value, filters} = this.state
+        const {dataSource} = this.props
+        const {filters, value} = this.state
 
         const suffix = <i className="icon ap ap-navmenu-light" onClick={this.openModal}/>;
 
@@ -69,8 +89,9 @@ class ReferControl extends React.Component{
                         dataSet={dataSource}
                         onChange={value => {
                             this.selectedKeys = value
+                            this.forceUpdate()
                         }}
-                        selectedKeys={value}
+                        selectedKeys={this.selectedKeys}
                         filters={filters}
                     />
                 </Modal>

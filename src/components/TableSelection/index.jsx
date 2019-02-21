@@ -19,16 +19,16 @@ class TableSelection extends React.Component{
     componentDidMount(){
         const {dataSet, filters} = this.props
         this.dataSource = this.getDataSource(dataSet, filters);
+        this.keyField = dataSet.keyField;
         
-        this.setState({
-            showItems: this.dataSource
-        })
+        this.setState({showItems: this.dataSource})
     }
 
     componentWillReceiveProps(nextProps){
         const {dataSet, filters} = nextProps
         this.dataSource = this.getDataSource(dataSet, filters);
-        
+        this.keyField = dataSet.keyField;
+
         this.setState({
             showItems: this.dataSource
         })

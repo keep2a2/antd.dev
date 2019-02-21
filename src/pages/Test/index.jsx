@@ -9,6 +9,9 @@ import {tableData2} from './mock/data01'
 const { Header, Footer, Content } = Layout;
 
 class Test extends React.Component{
+    state = {
+        referVal: [],
+    }
     render(){
         return (
             <Layout className="test-page">
@@ -21,6 +24,10 @@ class Test extends React.Component{
                     <div style={{ width: 300 }}>
                         <ReferControl
                             dataSource={tableData2}
+                            value={this.state.referVal}
+                            onChange={value => {
+                                this.setState({referVal: value})
+                            }}
                         />
 
                         <DropdownControl
