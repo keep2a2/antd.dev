@@ -68,6 +68,7 @@ class ReferControl extends React.Component{
                     suffix={suffix}
                     value={value.join(',')}
                     onChange={this.handleInputChange}
+                    size={'small'}
                 />
 
                 <Modal

@@ -11,6 +11,7 @@ const { Header, Footer, Content } = Layout;
 class Test extends React.Component{
     state = {
         referVal: [],
+        dropVal: [],
     }
     render(){
         return (
@@ -32,6 +33,11 @@ class Test extends React.Component{
 
                         <DropdownControl
                             dataSource={tableData2}
+                            showSearch={true}
+                            value={this.state.dropVal}
+                            onChange={value => {
+                                this.setState({dropVal: value})
+                            }}
                         />
                     </div>
                 </Content>

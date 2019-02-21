@@ -1,77 +1,63 @@
 import React from 'react'
-import { Input, Table } from 'antd'
-
+import { Table } from 'antd'
+import _ from 'lodash'
 import './index.less'
 
-const Search = Input.Search;
-
-class TableSelection extends React.Component{
+class TableSelection extends React.Component {
     dataSource = null
     keyField = null
 
-    constructor(props){
+    constructor(props) {
         super(props)
         this.state = {
             showItems: []
         }
     }
 
-    componentDidMount(){
-        const {dataSet, filters} = this.props
+    componentDidMount() {
+        const { dataSet, filters } = this.props
+        if (dataSet) this.keyField = dataSet.keyField;
         this.dataSource = this.getDataSource(dataSet, filters);
-        this.keyField = dataSet.keyField;
-        
-        this.setState({showItems: this.dataSource})
+
+        this.setState({ showItems: this.dataSource })
     }
 
-    componentWillReceiveProps(nextProps){
-        const {dataSet, filters} = nextProps
+    componentWillReceiveProps(nextProps) {
+        const { dataSet, filters } = nextProps
+        if (dataSet) this.keyField = dataSet.keyField;
         this.dataSource = this.getDataSource(dataSet, filters);
-        this.keyField = dataSet.keyField;
 
         this.setState({
             showItems: this.dataSource
         })
     }
 
-    handleSearch = (keyword) => {
-        const items = this.dataSource.filter(item => {
-            let match = false
-            const keys = Object.keys(item)
-            for(let k of keys){
-                if(String(item[k]).indexOf(keyword) > -1){
-                    match = true
-                    break
-                }
-            }
-            return match
-        })
-        this.setState({showItems: items})
-    }
-
     getDataSource = (dataSet, filters) => {
+        if (!dataSet) return [];
+
         let dataSource = [];
         const keyField = this.keyField ? this.keyField : 'key';
-        
-        dataSet.datas.forEach( data => {
+
+        dataSet.datas.forEach(data => {
             let item = {};
             dataSet.fields.forEach((field, index) => {
                 item[field.code] = data[index];
-                if(keyField === field.code){
+                if (keyField === field.code) {
                     item.key = data[index];
                 }
             })
             dataSource.push(item);
         });
 
-        let filterKeys = filters ? Object.keys(filters): [];
-        filterKeys = filterKeys.filter(k => filters[k] && filters[k].length );
-        if(filterKeys.length){
+        // apply filters
+        let filterKeys = filters ? Object.keys(filters) : [];
+        filterKeys = filterKeys.filter(k => filters[k] && filters[k].length);
+        if (filterKeys.length) {
             dataSource = dataSource.filter(item => {
                 let matchNum = 0;
-                for(let k of filterKeys){
-                    if(filters[k].includes(item[k])){
-                        matchNum ++;
+                for (let k of filterKeys) {
+                    if (filters[k].includes(item[k])) {
+                        matchNum++;
                     }
                 }
                 return matchNum === filterKeys.length;
@@ -82,17 +68,22 @@ class TableSelection extends React.Component{
     }
 
     getColumns = (dataSet) => {
+        if (!dataSet) return [];
+
         let columns = [];
-        
-        dataSet.fields.forEach(field => {
-            columns.push({
-                title: field.label || field.code,
-                dataIndex: field.code,
-                // sorter: (a, b) => a.age - b.age,
-                // sortDirections: ['descend', 'ascend'],
-            })
-        });
-        
+
+        dataSet.displayFields.forEach(fieldcode => {
+            const field = dataSet.fields.find(item => fieldcode === item.code);
+            if(field){
+                columns.push({
+                    title: field.label || field.code,
+                    dataIndex: field.code,
+                    // sorter: (a, b) => a.age - b.age,
+                    // sortDirections: ['descend', 'ascend'],
+                })
+            }
+        })
+
         return columns;
     }
 
@@ -104,7 +95,8 @@ class TableSelection extends React.Component{
                 console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
 
                 const validkeys = selectedRows.map(item => item.key);
-                this.props.onChange(validkeys);
+
+                this.props.onChange(_.uniq(validkeys));
             },
             getCheckboxProps: record => ({
                 name: record.name,
@@ -113,22 +105,18 @@ class TableSelection extends React.Component{
         };
     }
 
-    render(){
-        const {dataSet, showSearch} = this.props
-        const {showItems} = this.state
-         
+    render() {
+        const { dataSet } = this.props
+        const { showItems } = this.state
+
         const columns = this.getColumns(dataSet);
         const rowSelection = this.getRowSelection();
 
         return (
             <div className="table-selection">
-                {showSearch && (<Search
-                    placeholder="input search text"
-                    onSearch={this.handleSearch}
-                />)}
-                <Table 
-                    rowSelection={rowSelection} 
-                    columns={columns} 
+                <Table
+                    rowSelection={rowSelection}
+                    columns={columns}
                     dataSource={showItems}
                     size="small"
                     pagination={{
@@ -137,7 +125,7 @@ class TableSelection extends React.Component{
                         showSizeChanger: true,
                         showTotal: total => `共 ${total} 条`,
                     }}
-                    // scroll={{ y: 220 }}
+                // scroll={{ y: 220 }}
                 />
             </div>
         )

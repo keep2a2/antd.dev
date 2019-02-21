@@ -24,6 +24,7 @@ export const tableData = [{
 
 export const tableData2 = {
     keyField: 'name',
+    displayFields: ['name', 'age', 'address'],
     fields: [
         {code: 'key'},
         {code: 'name', label: '姓名'},

@@ -1,15 +1,18 @@
 import React from 'react'
 import { Input, Popover} from 'antd'
 import TableSelection from '../TableSelection'
-
 import './index.less'
+
+const Search = Input.Search;
 
 class DropdownControl extends React.Component{
     constructor(props){
         super(props)
         this.state = {
             dropdownVisible: false,
-            value: [3, 5],
+            value: [],
+            showItems: [],
+            keyword: '',
         }
     }
 
@@ -26,18 +29,44 @@ class DropdownControl extends React.Component{
         this.setState({value: newValue})
     }
 
+    handleSearch = (keyword) => {
+        const {dataSource} = this.props
+        const items = dataSource.datas.filter(item => {
+            let match = false
+            const keys = Object.keys(item)
+            for (let k of keys) {
+                if (String(item[k]).indexOf(keyword) > -1) {
+                    match = true
+                    break
+                }
+            }
+            return match
+        })
+        this.setState({ showItems: items, keyword })
+    }
+
     render(){
-        const {dataSource} = this.props        
-        const {value,dropdownVisible} = this.state
+        const {dataSource, showSearch} = this.props
+        const {value, dropdownVisible, showItems, keyword} = this.state
+
+        const dataSourceNew = {
+            ...dataSource,
+            datas: keyword ? showItems : dataSource.datas,
+        }
 
         const popoverContent = (
-            
-            <TableSelection
-                showSearch={true}
-                dataSet={dataSource}
-                onChange={this.handleTableChange}
-                selectedKeys={value}
-            />
+            <React.Fragment>
+                {showSearch && (<Search
+                    placeholder="input search text"
+                    onSearch={this.handleSearch}
+                />)}
+                <TableSelection
+                    showSearch={true}
+                    dataSet={dataSourceNew}
+                    onChange={this.handleTableChange}
+                    selectedKeys={value}
+                />
+            </React.Fragment>
         );
 
         const suffix = (<i 
@@ -62,6 +91,7 @@ class DropdownControl extends React.Component{
                         suffix={suffix}
                         value={value.join(',')}
                         onChange={this.handleInputChange}
+                        size={'small'}
                     />
                 </Popover>
             </div>
