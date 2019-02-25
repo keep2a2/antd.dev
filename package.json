@@ -16,9 +16,11 @@
     "react-redux": "^6.0.0",
     "react-router-dom": "^4.3.1",
     "react-scripts": "2.0.5",
+    "react-sortablejs": "^1.5.1",
     "redux": "^4.0.1",
     "redux-logger": "^3.0.6",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "sortablejs": "^1.8.3"
   },
   "scripts": {
     "start": "react-app-rewired start",

@@ -7817,6 +7817,14 @@ prop-types@15.x, prop-types@^15.5.0, prop-types@^15.5.10, prop-types@^15.5.4, pr
     loose-envify "^1.3.1"
     object-assign "^4.1.1"
 
+prop-types@>=15.0.0:
+  version "15.7.2"
+  resolved "http://registry.npm.taobao.org/prop-types/download/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
+  dependencies:
+    loose-envify "^1.4.0"
+    object-assign "^4.1.1"
+    react-is "^16.8.1"
+
 proto-list@~1.2.1:
   version "1.2.4"
   resolved "http://registry.npm.taobao.org/proto-list/download/proto-list-1.2.4.tgz#212d5bfe1318306a420f6402b8e26ff39647a849"
@@ -8364,7 +8372,6 @@ react-app-polyfill@^0.1.3:
 react-app-rewire-eslint@^0.2.3:
   version "0.2.3"
   resolved "https://registry.npmjs.org/react-app-rewire-eslint/-/react-app-rewire-eslint-0.2.3.tgz#88e93d74569c33fe22185d46f6a2b521c4dd7fb6"
-  integrity sha512-BRSpZw+oHNLE4Hdq+L+b7HOrfPJSlsrtzun8FMP9vcg/m6vv4PV97VBxECkjqIPWExzJLi6kbcizcKTwTaaWNA==
 
 react-app-rewire-less@^2.1.3:
   version "2.1.3"
@@ -8426,6 +8433,10 @@ react-error-overlay@^5.1.0:
 react-is@^16.3.2, react-is@^16.6.3, react-is@^16.7.0:
   version "16.7.0"
   resolved "http://registry.npm.taobao.org/react-is/download/react-is-16.7.0.tgz#c1bd21c64f1f1364c6f70695ec02d69392f41bfa"
+
+react-is@^16.8.1:
+  version "16.8.3"
+  resolved "http://registry.npm.taobao.org/react-is/download/react-is-16.8.3.tgz#4ad8b029c2a718fc0cfc746c8d4e1b7221e5387d"
 
 react-lazy-load@^3.0.13:
   version "3.0.13"
@@ -8537,6 +8548,12 @@ react-slick@~0.23.2:
     lodash.debounce "^4.0.8"
     prettier "^1.14.3"
     resize-observer-polyfill "^1.5.0"
+
+react-sortablejs@^1.5.1:
+  version "1.5.1"
+  resolved "http://registry.npm.taobao.org/react-sortablejs/download/react-sortablejs-1.5.1.tgz#ba05a554548cf9733cc2d5411ece9b97f911b63e"
+  dependencies:
+    prop-types ">=15.0.0"
 
 react@^16.7.0:
   version "16.7.0"
@@ -9353,6 +9370,10 @@ socks@~2.2.0:
   dependencies:
     ip "^1.1.5"
     smart-buffer "^4.0.1"
+
+sortablejs@^1.8.3:
+  version "1.8.3"
+  resolved "http://registry.npm.taobao.org/sortablejs/download/sortablejs-1.8.3.tgz#5ae908ef96300966e95440a143340f5dd565a0df"
 
 sorted-object@~2.0.1:
   version "2.0.1"
