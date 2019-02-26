@@ -2,6 +2,8 @@ import React from 'react'
 import { Layout } from 'antd'
 import ReferControl from '../../components/ReferControl'
 import DropdownControl from '../../components/DropdownControl'
+import DropdownButton from './cases/DropdownButton'
+
 import './index.less'
 
 import {tableData2} from './mock/data01'
@@ -22,8 +24,9 @@ class Test extends React.Component{
 
                 <Content>
                     content
-                    <div style={{ width: 300 }}>
+                    <div className="input-controls" style={{ width: 300 }}>
                         <ReferControl
+                            title="参照"
                             dataSource={tableData2}
                             value={this.state.referVal}
                             onChange={value => {
@@ -39,6 +42,10 @@ class Test extends React.Component{
                                 this.setState({dropVal: value})
                             }}
                         />
+                    </div>
+
+                    <div className="buttons-dropdowns">
+                        <DropdownButton />
                     </div>
                 </Content>
 
