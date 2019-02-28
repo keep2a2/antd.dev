@@ -3,6 +3,8 @@ import { Layout } from 'antd'
 import ReferControl from '../../components/ReferControl'
 import DropdownControl from '../../components/DropdownControl'
 import DropdownButton from './cases/DropdownButton'
+import PinyinSearch from '../../components/PinyinSearch'
+import {dataSetTransfer} from "../../tools/objectHelper"
 
 import './index.less'
 
@@ -16,6 +18,9 @@ class Test extends React.Component{
         dropVal: [],
     }
     render(){
+
+        const listData = dataSetTransfer(tableData2);
+
         return (
             <Layout className="test-page">
                 <Header>
@@ -41,6 +46,12 @@ class Test extends React.Component{
                             onChange={value => {
                                 this.setState({dropVal: value})
                             }}
+                        />
+
+
+                        <PinyinSearch
+                            title={'ddd'}
+                            dataSource={listData}
                         />
                     </div>
 

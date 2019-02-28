@@ -3,6 +3,7 @@ import { Layout, List, Card, Icon } from 'antd'
 import { Link, Route, Switch } from 'react-router-dom'
 
 import SortableExample from './cases/SortableExample'
+// import DNDSortExample from './cases/DNDSortExample'
 
 const { Header, Footer, Content } = Layout;
 const { Item } = List;
@@ -25,6 +26,7 @@ const CardsList = ({match}) => {
             >
                 <List>
                     <Item><Link to={`${basePath}/sortable`}>拖动排序-sortable</Link></Item>
+                    <Item><Link to={`${basePath}/sortableDND`}>拖动排序-sortableDND</Link></Item>
                     <Item><Link to={`test`}>其他</Link></Item>
                 </List>
             </Card>
@@ -55,8 +57,8 @@ class Examples extends React.Component{
                     <Switch>
                         <Route path={`${basePath}/`} exact component={CardsList}/>
                         <Route path={`${basePath}/sortable`} component={SortableExample}/>
+                        {/* <Route path={`${basePath}/sortableDND`} component={DNDSortExample}/> */}
                     </Switch>
-
                 </Content>
 
                 <Footer>
